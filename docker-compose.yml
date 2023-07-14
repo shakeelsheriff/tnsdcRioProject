@@ -1,0 +1,16 @@
+version: '3'
+services:
+  myapp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8080:8080
+      - 80:80
+    volumes:
+      - jenkins_data:/var/lib/jenkins
+      - jenkins_logs:/var/log/jenkins
+volumes:
+  jenkins_data:
+  jenkins_logs:
+
