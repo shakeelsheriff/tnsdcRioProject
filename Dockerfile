@@ -65,7 +65,7 @@ RUN wget -O /tmp/geckodriver-v0.30.0-linux64.tar.gz https://github.com/mozilla/g
     chmod +x /usr/local/bin/geckodriver
 
 # Expose necessary ports for Jenkins
-EXPOSE 8080
+EXPOSE 8080 80 5901
 
 # Set working directory
 WORKDIR /app
