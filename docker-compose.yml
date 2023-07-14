@@ -1,16 +1,47 @@
 version: '3'
 services:
-  myapp:
+  rioproject:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - 8080:8080
-      - 80:80
     volumes:
       - jenkins_data:/var/lib/jenkins
       - jenkins_logs:/var/log/jenkins
 volumes:
   jenkins_data:
   jenkins_logs:
+  
+    networks:
+      - app-network
 
+  tomcat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    networks:
+      - app-network
+
+  eclipse:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DISPLAY=:1
+    ports:
+      - 5901:5901
+    volumes:
+      - workspace:/workspace
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  jenkins_home:
+  workspace:
