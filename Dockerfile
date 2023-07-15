@@ -15,6 +15,8 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 # Install curl
 RUN apt-get install -y curl
 
+RUN apt-get install -y xvfb
+
 # Download Eclipse
 RUN curl -L -o eclipse.tar.gz "https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2021-12/R/eclipse-jee-2021-12-R-linux-gtk-x86_64.tar.gz" \
     && tar -xzvf eclipse.tar.gz -C /opt \
