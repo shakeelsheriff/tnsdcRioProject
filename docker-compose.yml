@@ -20,18 +20,28 @@ services:
     networks:
       - app-network
 
-  eclipse:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - DISPLAY=:1
-    ports:
-      - 5903:5904
-    volumes:
-      - workspace:/workspace
-    networks:
-      - app-network
+eclipse:
+  build:
+    context: .
+    dockerfile: Dockerfile
+  environment:
+    - DISPLAY=:1
+  ports:
+    - 5901:5901
+  volumes:
+    - workspace:/workspace
+  networks:
+    - app-network
+  command:
+    - "/usr/bin/Xvfb"
+    - ":1"
+    - "-screen"
+    - "0"
+    - "1024x768x24"
+    - "/opt/eclipse/eclipse"
+    - "-data"
+    - "/workspace"
+
 
 networks:
   app-network:
