@@ -50,12 +50,8 @@ RUN apt-get update && \
 # Install GIT and Maven
 RUN apt-get install -y git maven
 
-# Install Chromium driver
-RUN apt-get install -y chromium-driver
-
-# Install Gecko driver (Firefox)
-RUN apt-get install -y firefox
-
+# Install Chromium browser
+RUN apt-get install -y chromium-browser
 
 # Download and configure Gecko driver
 RUN curl -L -o geckodriver-v0.30.0-linux64.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz \
