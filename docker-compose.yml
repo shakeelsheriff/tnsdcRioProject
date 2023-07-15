@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8081:8081
+      - 80:80
     networks:
       - app-network
 
@@ -27,7 +27,6 @@ services:
     environment:
       - DISPLAY=:1
     ports:
-      - 8081:8081
       - 5901:5901
     volumes:
       - workspace:/workspace
