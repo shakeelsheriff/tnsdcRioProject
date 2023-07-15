@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8081:8080
+      - 8080:8080
     volumes:
       - jenkins_data:/var/lib/jenkins
     networks:
@@ -16,7 +16,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 80:80
+      - 8080:8080
     networks:
       - app-network
 
@@ -27,16 +27,17 @@ services:
     environment:
       - DISPLAY=:1
     ports:
+      - 8080:8080
       - 5901:5901
     volumes:
       - workspace:/workspace
     networks:
       - app-network
 
-volumes:
-  jenkins_data:
-  workspace:
-
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  jenkins_data:
+  workspace:
