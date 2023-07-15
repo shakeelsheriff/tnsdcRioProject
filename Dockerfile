@@ -15,6 +15,7 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 # Install curl
 RUN apt-get install -y curl
 
+# Install Xvfb
 RUN apt-get install -y xvfb
 
 # Download Eclipse
@@ -29,7 +30,7 @@ ENV PATH="${PATH}:/opt/eclipse"
 RUN apt-get install -y dbus-x11 x11-utils
 
 # Set up X11 forwarding
-ENV DISPLAY=:0
+ENV DISPLAY=:1
 
 # Install Apache Tomcat
 RUN apt-get install -y tomcat9
@@ -66,14 +67,13 @@ RUN wget -O /tmp/geckodriver-v0.30.0-linux64.tar.gz https://github.com/mozilla/g
     tar -xvzf /tmp/geckodriver-v0.30.0-linux64.tar.gz -C /usr/local/bin/ && \
     chmod +x /usr/local/bin/geckodriver
 
-# Expose necessary ports for Jenkins
-EXPOSE 8081 80 5902
+# Expose necessary ports for Jenkins, Tomcat, and Xvfb
+EXPOSE 8081 80 5901
 
 # Set working directory
 WORKDIR /app
 
 # Start Jenkins, Tomcat, and Eclipse with GUI
-CMD service jenkins start && tail -f /var/log/jenkins/jenkins.log & \
+CMD xvfb-run -s "-screen 0 1024x768x24" sh -c "service jenkins start && tail -f /var/log/jenkins/jenkins.log" & \
     $CATALINA_HOME/bin/catalina.sh run & \
-    /usr/bin/Xvfb :1 -screen 0 1024x768x24 & \
     export DISPLAY=:1 && /opt/eclipse/eclipse -data /workspace
