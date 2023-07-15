@@ -8,11 +8,6 @@ services:
       - 8080:8080
     volumes:
       - jenkins_data:/var/lib/jenkins
-      - jenkins_logs:/var/log/jenkins
-volumes:
-  jenkins_data:
-  jenkins_logs:
-  
     networks:
       - app-network
 
@@ -38,10 +33,10 @@ volumes:
     networks:
       - app-network
 
+volumes:
+  jenkins_data:
+  workspace:
+
 networks:
   app-network:
     driver: bridge
-
-volumes:
-  jenkins_home:
-  workspace:
