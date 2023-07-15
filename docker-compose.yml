@@ -27,7 +27,7 @@ services:
     environment:
       - DISPLAY=:1
     ports:
-      - 5901:5901
+      - 5901:5902
     volumes:
       - workspace:/workspace
     networks:
