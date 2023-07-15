@@ -5,7 +5,7 @@ FROM eclipse/che-server:nightly
 WORKDIR /projects
 
 # Expose necessary ports for Eclipse Che
-EXPOSE 8080 8081
+EXPOSE 8082 8083
 
 # Start Eclipse Che server
 CMD ["start"]
