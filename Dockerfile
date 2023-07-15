@@ -33,7 +33,7 @@ ENV DISPLAY=:0
 RUN apt-get install -y tomcat9
 
 # Expose default ports for Apache Tomcat
-EXPOSE 8081 80
+EXPOSE 8082
 
 # Set environment variables for Apache Tomcat
 ENV CATALINA_HOME=/usr/share/tomcat9
