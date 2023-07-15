@@ -1,5 +1,5 @@
 # Base image
-FROM debian:buster
+FROM ubuntu:latest
 
 # Install utilities
 RUN apt-get update && \
