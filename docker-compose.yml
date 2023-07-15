@@ -1,46 +1,9 @@
 version: '3'
 services:
-  rioproject:
+  eclipse-che:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 8082:8081
-    volumes:
-      - jenkins_data:/var/lib/jenkins
-    networks:
-      - app-network
-
-  tomcat:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - 8083:8084
-    networks:
-      - app-network
-
-  eclipse:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - DISPLAY=:1
-    ports:
-      - 5902:5903
-    volumes:
-      - workspace:/workspace
-    networks:
-      - app-network
-    command:
-      - "/opt/eclipse/eclipse"
-      - "-data"
-      - "/workspace"
-
-networks:
-  app-network:
-    driver: bridge
-
-volumes:
-  jenkins_data:
-  workspace:
+      - 8080:8080
+      - 8081:8081
