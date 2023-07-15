@@ -1,5 +1,5 @@
 # Base image
-FROM ubuntu:latest
+FROM debian:buster
 
 # Install utilities
 RUN apt-get update && \
@@ -15,8 +15,8 @@ ENV PATH=$PATH:$JAVA_HOME/bin
 # Install curl
 RUN apt-get install -y curl
 
-# Install Xvfb
-RUN apt-get install -y xvfb
+# Install Xvfb and other necessary packages
+RUN apt-get install -y xvfb dbus-x11 x11-utils
 
 # Download Eclipse
 RUN curl -L -o eclipse.tar.gz "https://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/2021-12/R/eclipse-jee-2021-12-R-linux-gtk-x86_64.tar.gz" \
@@ -25,12 +25,6 @@ RUN curl -L -o eclipse.tar.gz "https://www.eclipse.org/downloads/download.php?fi
 
 # Set the PATH for Eclipse
 ENV PATH="${PATH}:/opt/eclipse"
-
-# Install required packages for GUI
-RUN apt-get install -y dbus-x11 x11-utils
-
-# Set up X11 forwarding
-ENV DISPLAY=:1
 
 # Install Apache Tomcat
 RUN apt-get install -y tomcat9
@@ -63,9 +57,9 @@ RUN apt-get install -y chromium-driver
 RUN apt-get install -y firefox
 
 # Download and configure Gecko driver
-RUN wget -O /tmp/geckodriver-v0.30.0-linux64.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz && \
-    tar -xvzf /tmp/geckodriver-v0.30.0-linux64.tar.gz -C /usr/local/bin/ && \
-    chmod +x /usr/local/bin/geckodriver
+RUN curl -L -o geckodriver-v0.30.0-linux64.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz \
+    && tar -xzvf geckodriver-v0.30.0-linux64.tar.gz -C /usr/local/bin/ \
+    && chmod +x /usr/local/bin/geckodriver
 
 # Expose necessary ports for Jenkins, Tomcat, and Xvfb
 EXPOSE 8081 80 5901
@@ -73,7 +67,5 @@ EXPOSE 8081 80 5901
 # Set working directory
 WORKDIR /app
 
-# Start Jenkins, Tomcat, and Eclipse with GUI
-CMD xvfb-run -s "-screen 0 1024x768x24" sh -c "service jenkins start && tail -f /var/log/jenkins/jenkins.log" & \
-    $CATALINA_HOME/bin/catalina.sh run & \
-    export DISPLAY=:1 && /opt/eclipse/eclipse -data /workspace
+# Start Xvfb, Jenkins, Tomcat, and Eclipse with GUI
+CMD ["sh", "-c", "Xvfb :1 -screen 0 1024x768x24 & service jenkins start && tail -f /var/log/jenkins/jenkins.log & $CATALINA_HOME/bin/catalina.sh run & export DISPLAY=:1 && /opt/eclipse/eclipse -data /workspace"]
