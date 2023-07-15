@@ -72,12 +72,8 @@ EXPOSE 8081 80 5902
 # Set working directory
 WORKDIR /app
 
-# Start Jenkins service
-CMD ["service jenkins start", "tail -f /var/log/jenkins/jenkins.log"]
-
-# Start Tomcat servie
-CMD ["$CATALINA_HOME/bin/catalina.sh run"]
-
-# Start Eclipse with GUI
-CMD ["/usr/bin/Xvfb :1 -screen 0 1024x768x24", "export DISPLAY=:1", "/opt/eclipse/eclipse -data /workspace"]
-
+# Start Jenkins, Tomcat, and Eclipse with GUI
+CMD service jenkins start && tail -f /var/log/jenkins/jenkins.log & \
+    $CATALINA_HOME/bin/catalina.sh run & \
+    /usr/bin/Xvfb :1 -screen 0 1024x768x24 & \
+    export DISPLAY=:1 && /opt/eclipse/eclipse -data /workspace
