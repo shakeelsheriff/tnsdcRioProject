@@ -50,6 +50,9 @@ RUN apt-get update && \
 # Install GIT and Maven
 RUN apt-get install -y git maven
 
+# Install Firefox ESR
+RUN apt-get install -y firefox-esr
+
 # Download and configure Gecko driver
 RUN curl -L -o geckodriver-v0.30.0-linux64.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz \
     && tar -xzvf geckodriver-v0.30.0-linux64.tar.gz -C /usr/local/bin/ \
@@ -62,4 +65,4 @@ EXPOSE 8081 80 5901
 WORKDIR /app
 
 # Start Xvfb, Jenkins, Tomcat, and Eclipse with GUI
-CMD ["sh", "-c", "Xvfb :1 -screen 0 1024x768x24 & service jenkins start && tail -f /var/log/jenkins/jenkins.log & $CATALINA_HOME/bin/catalina.sh run & export DISPLAY=:1 && /opt/eclipse/eclipse -data /workspace"]
+CMD ["sh", "-c", "Xvfb :1 & service jenkins start && tail -f /var/log/jenkins/jenkins.log & $CATALINA_HOME/bin/catalina.sh run & export DISPLAY=:1 && /opt/eclipse/eclipse -data /workspace"]
