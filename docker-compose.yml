@@ -33,11 +33,6 @@ services:
     networks:
       - app-network
     command:
-      - "/usr/bin/Xvfb"
-      - ":1"
-      - "-screen"
-      - "0"
-      - "1024x768x24"
       - "/opt/eclipse/eclipse"
       - "-data"
       - "/workspace"
