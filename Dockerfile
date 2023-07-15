@@ -50,9 +50,6 @@ RUN apt-get update && \
 # Install GIT and Maven
 RUN apt-get install -y git maven
 
-# Install Firefox ESR
-RUN apt-get install -y firefox-esr
-
 # Download and configure Gecko driver
 RUN curl -L -o geckodriver-v0.30.0-linux64.tar.gz https://github.com/mozilla/geckodriver/releases/download/v0.30.0/geckodriver-v0.30.0-linux64.tar.gz \
     && tar -xzvf geckodriver-v0.30.0-linux64.tar.gz -C /usr/local/bin/ \
